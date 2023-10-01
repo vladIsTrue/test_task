@@ -89,8 +89,9 @@ bool TableModelTask::removeRows(int row, int count, const QModelIndex &parent)
     }
 
     beginRemoveRows(parent, row, row + count - 1);
-    while (count-- > 0)
+    while (count-- > 0) {
         m_records.removeAt(row);
+    }
     endRemoveRows();
 
     return true;

@@ -43,8 +43,7 @@ QVariant TableModelEmployee::data(const QModelIndex &index, int role) const {
     if (!index.isValid()
         || m_records.count() <= index.row()
         || (role != Qt::DisplayRole && role != Qt::EditRole)
-        )
-    {
+        ) {
         return QVariant();
     }
 

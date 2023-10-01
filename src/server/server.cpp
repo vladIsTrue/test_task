@@ -37,8 +37,7 @@ Server::Server(int port
 
 Server::~Server()
 {
-    foreach (QTcpSocket* socket, m_sockets)
-    {
+    foreach (QTcpSocket* socket, m_sockets) {
         socket->close();
         socket->deleteLater();
     }
@@ -62,7 +61,7 @@ void Server::run()
         LOGE("Socket listening error.");
     }
 
-    if(m_dbController->connectToDB()) {
+    if (m_dbController->connectToDB()) {
         LOGI("Server opens database.");
     }
     else {
@@ -72,8 +71,9 @@ void Server::run()
 
 void Server::newConnection()
 {
-    while (m_server->hasPendingConnections())
+    while (m_server->hasPendingConnections()) {
         appendToSocketList(m_server->nextPendingConnection());
+    }
 }
 
 void Server::appendToSocketList(QTcpSocket* socket)
@@ -98,8 +98,7 @@ void Server::readSocket()
     socketStream.startTransaction();
     socketStream >> buffer;
 
-    if(!socketStream.commitTransaction())
-    {
+    if (!socketStream.commitTransaction()) {
         return;
     }
 
@@ -122,10 +121,8 @@ void Server::discardSocket()
 
 void Server::sendResponse(QTcpSocket *socket, const QString &data)
 {
-    if(socket)
-    {
-        if(socket->isOpen())
-        {
+    if (socket) {
+        if (socket->isOpen()) {
             QDataStream socketStream(socket);
             socketStream.setVersion(QDataStream::Qt_5_15);
 
@@ -150,31 +147,27 @@ QString Server::execute(QByteArray buffer)
 
     switch (code)
     {
-    case requestsCode::GET_EMPLOYEE_DATA:
-        return getEmployeeData();
+        case requestsCode::GET_EMPLOYEE_DATA:
+            return getEmployeeData();
+            break;
+        case requestsCode::GET_ALL_TASKS: {
+            QString DataAsString = QString(buffer);
+            return getAllTasksData(DataAsString);
+        }
+            break;
+        case requestsCode::GET_EXPIRED_TASKS: {
+            QString DataAsString = QString(buffer);
+            return getExpiredTasksData(DataAsString);
+        }
         break;
-    case requestsCode::GET_ALL_TASKS:
-    {
-        QString DataAsString = QString(buffer);
-        return getAllTasksData(DataAsString);
-    }
-        break;
-    case requestsCode::GET_EXPIRED_TASKS:
-    {
-        QString DataAsString = QString(buffer);
-        return getExpiredTasksData(DataAsString);
-    }
-    break;
-    case requestsCode::INSERT_TASK:
-    {
-        return insertTask(buffer);
-    }
-        break;
-    case requestsCode::REMOVE_TASK:
-    {
-        return removeTask(buffer);
-    }
-        break;
+        case requestsCode::INSERT_TASK: {
+            return insertTask(buffer);
+        }
+            break;
+        case requestsCode::REMOVE_TASK: {
+            return removeTask(buffer);
+        }
+            break;
     }
 
     return {};
@@ -221,6 +214,7 @@ QString Server::getAllTasksData(QString buffer)
         response += employees.record(i).value("deadline").toString().trimmed() + ':';
         response += employees.record(i).value("status").toString().trimmed() + ':';
     }
+
     return response;
 }
 
@@ -260,10 +254,11 @@ QString Server::insertTask(QByteArray buffer)
     insertQuery.bindValue(":executor", tasksInformation.at(0));
     insertQuery.bindValue(":task_name", tasksInformation.at(1));
 
-    if (tasksInformation.at(2) == "NULL")
+    if (tasksInformation.at(2) == "NULL") {
         insertQuery.bindValue(":parent_task",  QVariant());
-    else
+    } else {
         insertQuery.bindValue(":parent_task", tasksInformation.at(2));
+    }
 
     insertQuery.bindValue(":deadline", tasksInformation.at(3));
     insertQuery.bindValue(":status", status);

@@ -79,8 +79,7 @@ void SocketConnection::readSocket()
     socketStream.startTransaction();
     socketStream >> buffer;
 
-    if (!socketStream.commitTransaction())
-    {
+    if (!socketStream.commitTransaction()) {
         return;
     }
 
@@ -99,10 +98,8 @@ void SocketConnection::discardSocket()
 
 void SocketConnection::sendRequest(qint16 code, const QString &data)
 {
-    if (m_socket)
-    {
-        if (m_socket->isOpen())
-        {
+    if (m_socket) {
+        if (m_socket->isOpen()) {
             QDataStream socketStream(m_socket);
             socketStream.setVersion(QDataStream::Qt_5_15);
 
@@ -126,28 +123,24 @@ QByteArray SocketConnection::createRequest(qint16 code, QString data)
 
 void SocketConnection::handleResponse(qint16 code, QByteArray buffer)
 {
-    switch (code)
-    {
-    case 0:
-    case 1:
-    case 2:
-    {
-        m_responseData.clear();
-        QString BufferAsString = QString(buffer);
-        m_responseData = BufferAsString.split(':');
+    switch (code) {
+        case 0:
+        case 1:
+        case 2: {
+            m_responseData.clear();
+            QString BufferAsString = QString(buffer);
+            m_responseData = BufferAsString.split(':');
 
-        emit done();
-    }
-        break;
-    case 3:
-    {
-        LOGI("Insert status: " << QString(buffer));
-    }
-        break;
-    case 4:
-    {
-        LOGI("Remove status: " << QString(buffer));
-    }
-        break;
+            emit done();
+        }
+            break;
+        case 3: {
+            LOGI("Insert status: " << QString(buffer));
+        }
+            break;
+        case 4: {
+            LOGI("Remove status: " << QString(buffer));
+        }
+            break;
     }
 }

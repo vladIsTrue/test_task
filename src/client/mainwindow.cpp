@@ -50,8 +50,7 @@ void MainWindow::initializeWindow()
 {
     auto buff = m_connectionToServer->getEmployeeData();
 
-    for (int i = 0; i < buff.size() - 1; i +=3)
-    {
+    for (int i = 0; i < buff.size() - 1; i +=3) {
         RecordInfoEmployee record{buff.at(i), buff.at(i + 1), buff.at(i + 2)};
         m_modelEmployee->addRecord(record);
     }
@@ -70,18 +69,17 @@ void MainWindow::handleOnTableClicked(QModelIndex index)
         m_modelTask->removeRows(0, _countRows);
 
         switch (index.column()) {
-        case  ColumnEmployee::ALL_TASKS:
-            buff = m_connectionToServer->getAllTasks(fullName);
-            break;
-        case  ColumnEmployee::EXPIRED_TASKS:
-            buff = m_connectionToServer->getExpiredTasks(fullName);
-            break;
+            case  ColumnEmployee::ALL_TASKS:
+                buff = m_connectionToServer->getAllTasks(fullName);
+                break;
+            case  ColumnEmployee::EXPIRED_TASKS:
+                buff = m_connectionToServer->getExpiredTasks(fullName);
+                break;
         }
 
         _countRows = (buff.size() - 1) / 4;
 
-        for (int i = 0; i < buff.size() - 1; i +=4)
-        {
+        for (int i = 0; i < buff.size() - 1; i +=4) {
             RecordInfoTask record{buff.at(i), buff.at(i + 1), buff.at(i + 2), buff.at(i + 3)};
             m_modelTask->addRecord(record);
         }

@@ -24,16 +24,16 @@ QVariant TableModelEmployee::headerData(int section, Qt::Orientation orientation
     }
 
     switch(section) {
-    case FULL_NAME:
-        return "Full name";
-    case POST:
-        return "Post";
-    case PHONE_NUMBER:
-        return "Phone number";
-    case ALL_TASKS:
-        return "All tasks";
-    case EXPIRED_TASKS:
-        return "Expired tasks";
+        case FULL_NAME:
+            return "Full name";
+        case POST:
+            return "Post";
+        case PHONE_NUMBER:
+            return "Phone number";
+        case ALL_TASKS:
+            return "All tasks";
+        case EXPIRED_TASKS:
+            return "Expired tasks";
     }
 
     return QVariant();

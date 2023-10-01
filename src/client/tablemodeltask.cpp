@@ -26,14 +26,14 @@ QVariant TableModelTask::headerData(int section, Qt::Orientation orientation, in
     }
 
     switch(section) {
-    case TASK_ID:
-        return "ID";
-    case TASK_NAME:
-        return "Task name";
-    case DEADLINE:
-        return "Deadline";
-    case STATUS:
-        return "Status";
+        case TASK_ID:
+            return "ID";
+        case TASK_NAME:
+            return "Task name";
+        case DEADLINE:
+            return "Deadline";
+        case STATUS:
+            return "Status";
     }
 
     return QVariant();
@@ -43,8 +43,7 @@ QVariant TableModelTask::data(const QModelIndex &index, int role) const {
     if (!index.isValid()
         || m_records.count() <= index.row()
         || ( role != Qt::DisplayRole && role != Qt::EditRole )
-        )
-    {
+        ) {
         return QVariant();
     }
 
@@ -85,8 +84,9 @@ bool TableModelTask::removeRows(int row, int count, const QModelIndex &parent)
 {
     if ((m_records.isEmpty())
         || (row >= m_records.size())
-        || ((row + count) > m_records.size()))
+        || ((row + count) > m_records.size())) {
         return false;
+    }
 
     beginRemoveRows(parent, row, row + count - 1);
     while (count-- > 0)

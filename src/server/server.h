@@ -4,37 +4,51 @@
 #include <QTcpServer>
 #include <QSqlDatabase>
 
+#include "idbcontroller.h"
+
 class QSettings;
 
-class Server : public QTcpServer
+class Server : public QObject
 {
     Q_OBJECT
 
 public:
-    Server();
+    Server(QObject *parent = nullptr);
     Server(int port
            , const QHostAddress &address
-           , const QString &dbDriver
            , const QString &dbHost
            , const QString &dbName
            , const QString &dbUserName
            , const QString &dbPassword
+           , QObject *parent = nullptr
            );
 
     ~Server();
 
     void run();
-private:
-    QHostAddress _address        {QHostAddress::Any};
-    int _port                    {5432};
-    QVector <QTcpSocket *> _sockets{};
+private slots:
+    void newConnection();
+    void appendToSocketList(QTcpSocket *socket);
 
-    QString _dbDriver            {"QPSQL"};
-    QString _dbHost              {"localhost"};
-    QString _dbName              {"server"};
-    QString _dbUserName          {"server"};
-    QString _dbPassword          {"server"};
-    QSqlDatabase _db             {};
+    void readSocket();
+    void discardSocket();
+private:
+    void sendResponse(QTcpSocket *socket, const QString &data);
+    QString execute(QByteArray buffer);
+    QByteArray createResponse(QString data);
+
+    QString getEmployeeData();
+    QString getAllTasksData(QString buffer);
+    QString getExpiredTasksData(QString buffer);
+    QString insertTask(QByteArray buffer);
+    QString removeTask(QByteArray buffer);
+
+    QHostAddress m_address        {QHostAddress::Any};
+    int m_port                    {2323};
+
+    IDBController*      m_dbController;
+    QSet<QTcpSocket*>   m_sockets;
+    QTcpServer*         m_server;
 };
 
 #endif // SERVER_H

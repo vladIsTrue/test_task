@@ -5,7 +5,9 @@ find_package(Qt6 REQUIRED COMPONENTS Sql)
 
 add_executable(Server
   main.cpp
-  utils.h
+
+  idbcontroller.h
+  pgdbcontroller.h pgdbcontroller.cpp
   server.h server.cpp
 )
 target_link_libraries(Server Qt6::Core)

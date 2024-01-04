@@ -1,10 +1,10 @@
 #ifndef SERVER_H
 #define SERVER_H
 
+#include "../dbcontroller/idbcontroller.h"
+
 #include <QTcpServer>
 #include <QSqlDatabase>
-
-#include "idbcontroller.h"
 
 class QSettings;
 

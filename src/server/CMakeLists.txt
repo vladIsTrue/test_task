@@ -1,14 +1,12 @@
-find_package(QT NAMES Qt6 Qt5 REQUIRED COMPONENTS Core)
-find_package(Qt6 REQUIRED COMPONENTS Core)
-find_package(Qt6 REQUIRED COMPONENTS Network)
-find_package(Qt6 REQUIRED COMPONENTS Sql)
+find_package(Qt6 REQUIRED COMPONENTS Core Network Sql)
 
 add_executable(Server
-  main.cpp
-
-  idbcontroller.h
-  pgdbcontroller.h pgdbcontroller.cpp
-  server.h server.cpp
+	main.cpp
+	dbcontroller/idbcontroller.h
+	dbcontroller/pgdbcontroller.cpp
+	dbcontroller/pgdbcontroller.h
+	server/server.cpp
+	server/server.h
 )
 target_link_libraries(Server Qt6::Core)
 target_link_libraries(Server Qt6::Network)

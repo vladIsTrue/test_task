@@ -1,13 +1,13 @@
 #ifndef MAINWINDOW_H
 #define MAINWINDOW_H
 
+#include "../tablemodel/tablemodelemployee.h"
+#include "../tablemodel/tablemodeltask.h"
+#include "../socket/socketconnection.h"
+
 #include <QString>
 #include <QTcpSocket>
 #include <QMainWindow>
-
-#include "tablemodeltask.h"
-#include "socketconnection.h"
-#include "tablemodelemployee.h"
 
 QT_BEGIN_NAMESPACE
 namespace Ui { class MainWindow; }
@@ -39,6 +39,6 @@ private:
     TableModelEmployee *m_modelEmployee;
     TableModelTask *m_modelTask;
 
-    int _countRows;
+    int m_countRows;
 };
 #endif // MAINWINDOW_H

@@ -1,14 +1,14 @@
 #include "server.h"
 
+#include "../../utils/utils.h"
+#include "../../utils/requests.h"
+#include "../dbcontroller/pgdbcontroller.h"
+
 #include <QSqlQuery>
 #include <QSqlRecord>
 #include <QTcpSocket>
 #include <QDataStream>
 #include <QSqlQueryModel>
-
-#include "pgdbcontroller.h"
-#include "../utils/utils.h"
-#include "../utils/requests.h"
 
 Server::Server(QObject *parent)
     : QObject(parent)

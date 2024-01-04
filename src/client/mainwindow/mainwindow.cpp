@@ -1,7 +1,7 @@
-#include "mainwindow.h"
+#include "../mainwindow/mainwindow.h"
 #include "./ui_mainwindow.h"
 
-#include "recordInfo.h"
+#include "../info/recordinfo.h"
 
 MainWindow::MainWindow(QWidget *parent)
     : QMainWindow(parent)
@@ -66,7 +66,7 @@ void MainWindow::handleOnTableClicked(QModelIndex index)
                            model()->
                            data(ui->tableViewEmployee->model()->index(current.row(),0),0).toString();
 
-        m_modelTask->removeRows(0, _countRows);
+        m_modelTask->removeRows(0, m_countRows);
 
         switch (index.column()) {
             case  ColumnEmployee::ALL_TASKS:
@@ -77,7 +77,7 @@ void MainWindow::handleOnTableClicked(QModelIndex index)
                 break;
         }
 
-        _countRows = (buff.size() - 1) / 4;
+        m_countRows = (buff.size() - 1) / 4;
 
         for (int i = 0; i < buff.size() - 1; i +=4) {
             RecordInfoTask record{buff.at(i), buff.at(i + 1), buff.at(i + 2), buff.at(i + 3)};

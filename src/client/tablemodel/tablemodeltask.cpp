@@ -1,6 +1,6 @@
 #include "tablemodeltask.h"
 
-#include "../utils/utils.h"
+#include "../../utils/utils.h"
 
 TableModelTask::TableModelTask(QObject* parent)
     : QAbstractTableModel(parent)

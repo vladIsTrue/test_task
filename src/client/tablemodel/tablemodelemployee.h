@@ -1,10 +1,10 @@
 #ifndef TABLEMODELEMPLOYEE_H
 #define TABLEMODELEMPLOYEE_H
 
+#include "../info/recordinfo.h"
+
 #include <QAbstractTableModel>
 #include <QStringList>
-
-#include "recordInfo.h"
 
 class TableModelEmployee : public QAbstractTableModel
 {

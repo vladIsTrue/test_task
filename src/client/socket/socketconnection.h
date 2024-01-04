@@ -30,7 +30,7 @@ private slots:
     void discardSocket();
 
     void sendRequest(qint16 code, const QString &data);
-    QByteArray createRequest(qint16 code, QString data);
+    QByteArray createRequest(qint16 code, const QString &data);
     void handleResponse(qint16 code, QByteArray buffer);
 
 private:

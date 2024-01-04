@@ -1,9 +1,9 @@
 #include "socketconnection.h"
 
-#include <QEventLoop>
+#include "../../utils/requests.h"
+#include "../../utils/utils.h"
 
-#include "../utils/requests.h"
-#include "../utils/utils.h"
+#include <QEventLoop>
 
 SocketConnection::SocketConnection(QObject *parent, const QString &serverHostName, quint16 serverPort)
     : QObject(parent)
@@ -108,7 +108,7 @@ void SocketConnection::sendRequest(qint16 code, const QString &data)
     }
 }
 
-QByteArray SocketConnection::createRequest(qint16 code, QString data)
+QByteArray SocketConnection::createRequest(qint16 code, const QString& data)
 {
     QByteArray header;
 
